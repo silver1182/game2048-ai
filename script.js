@@ -65,7 +65,14 @@ class Game2048 {
         } else if (delta > 0) {
             current *= 2;
         } else {
-            current /= 2;
+            // Decrease: 2->1->0, instead of dividing by 2
+            if (current === 2) {
+                current = 1;
+            } else if (current === 1) {
+                current = 0;
+            } else {
+                current /= 2;
+            }
         }
         
         // Cap at reasonable value
@@ -405,9 +412,6 @@ class Game2048 {
         const moveResult = this.move(this.grid, result.direction);
         this.grid = moveResult.grid;
         this.calculateScore();
-        
-        // Add a random tile (simulating the game)
-        this.grid = this.addRandomTile(this.grid);
         this.updateDisplay();
         
         return true;
