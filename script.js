@@ -436,12 +436,19 @@ class Game2048 {
         document.getElementById('autoPlayBtn').textContent = '停止自动';
         
         this.autoPlayInterval = setInterval(() => {
+            // 自动运行模式：AI 走一步后自动添加数字
             const moved = this.aiStep();
+            if (moved) {
+                // AI 移动成功，自动添加随机数字
+                this.grid = this.addRandomTile(this.grid);
+                this.updateDisplay();
+                this.calculateScore();
+            }
             if (!moved || this.getAvailableMoves(this.grid).length === 0) {
                 this.stopAutoPlay();
                 document.getElementById('suggestion').textContent = '自动结束';
             }
-        }, 300);
+        }, 400);
     }
     
     stopAutoPlay() {
