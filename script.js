@@ -492,17 +492,30 @@ class Game2048 {
             
             if (keyMap[e.key] !== undefined) {
                 e.preventDefault();
-                const dir = keyMap[e.key];
-                const result = this.move(this.grid, dir);
-                if (result.moved) {
-                    this.grid = result.grid;
-                    this.grid = this.addRandomTile(this.grid);
-                    this.updateDisplay();
-                    this.calculateScore();
-                    this.highlightArrow(dir);
-                }
+                this.executeMove(keyMap[e.key]);
             }
         });
+        
+        // Clickable direction arrows for mobile
+        const arrowIds = ['arrowLeft', 'arrowUp', 'arrowRight', 'arrowDown'];
+        arrowIds.forEach((id, dir) => {
+            document.getElementById(id).addEventListener('click', () => {
+                if (this.mode !== 'manual') return;
+                this.executeMove(dir);
+            });
+        });
+    }
+    
+    // Execute a move with direction
+    executeMove(dir) {
+        const result = this.move(this.grid, dir);
+        if (result.moved) {
+            this.grid = result.grid;
+            this.grid = this.addRandomTile(this.grid);
+            this.updateDisplay();
+            this.calculateScore();
+            this.highlightArrow(dir);
+        }
     }
 }
 

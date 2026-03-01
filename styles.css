@@ -256,6 +256,18 @@ h1 {
     font-size: 1.5em;
     color: #8f7a66;
     transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.arrow:hover {
+    background: #c6bdb4;
+    transform: scale(1.05);
+}
+
+.arrow:active {
+    background: #b6ada4;
+    transform: scale(0.95);
 }
 
 .arrow.active {
